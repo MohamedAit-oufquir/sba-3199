@@ -14,3 +14,12 @@ app.listen(3000,()=>{
     console.log('Listening on port:', 3000)
 
 })
+
+app.use(express.json());
+// app.use(express.urlencoded())
+
+app.get("/posts", async (req, res) => {
+  let collection = await db.collection("posts");
+  let result = await collection.find({}).limit(5).toArray();
+  res.send(result).status(200);
+});
