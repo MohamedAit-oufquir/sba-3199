@@ -23,3 +23,10 @@ app.get("/posts", async (req, res) => {
   let result = await collection.find({}).limit(5).toArray();
   res.send(result).status(200);
 });
+app.post("/posts", async (req, res) => {
+  let collection = await db.collection("posts");
+  let newDocument = req.body;
+  newDocument.date = new Date();
+  let result = await collection.insertOne(newDocument);
+  res.send(result);
+});
