@@ -1,20 +1,47 @@
 import express from 'express'
-import Mongoose from 'mongoose'
+import mongoose from 'mongoose'
 
+// import Post from './models/post.js'
 
-
+import 'dotenv/config'
 
 const app = express()
-// const port=3000 
-//  process.env.PORT
-await mongoose.connect('')
 
+const PORT = process.env.PORT
 
-app.get('/',(req, res)=>{
-    res.send("Hello world")
+app.use(express.json())
+
+await mongoose.connect(process.env.MONGO_URL)
+
+console.log('MongoDB Connected')
+
+app.get('/', (req, res) => {
+    res.send('Hello World!')
 })
-app .listen(3000,()=>{
-    console.log('Listening on port:', 3000)
+// get post
+app.get('/posts', async (req, res) => {
+    const posts = await Post.find({})
+    res.json(posts)
+})
 
-});
-    
+
+app.post('/posts', async (req, res) => {
+
+    console.log(req.body)
+
+    const postDoc = new Post({
+        author: req.body.author
+    })
+
+    const result = await postDoc.save()
+
+    // Alternative:
+
+    // const result = await Post.create({ author: req.body.author })
+
+    res.json(result)
+})
+
+app.listen(PORT, () => {
+    console.log('Listening on port: ', PORT)
+})
