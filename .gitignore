@@ -1,3 +1,2 @@
-MONGO_url=  "mongodb+srv://oufquir9:Mohamed0626@cluster0.uwpbigj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
-port=3000;
+.env
+node_modules
