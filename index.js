@@ -1,8 +1,8 @@
 import express from 'express'
 import mongoose from 'mongoose'
-
-
+import Movie from "./models/movies.js"
 import 'dotenv/config'
+import movies from './models/movies.js'
 
 const app = express()
 
@@ -15,61 +15,40 @@ await mongoose.connect(process.env.MONGO_URL)
 console.log('MongoDB Connected')
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
-// get post
-// app.get('/posts', async (req, res) => {
-//     const posts = await Post.find({})
-//     res.json(posts)
-// })
-app.get('./posts', async (req, res)=>{
-  let collection = await db.collection('posts')
-  let result = await collection.find({}).limit(50).toArray()
-  res.send(result).status(200)
+  res.send('Hello World!')
 })
 
-app.post('/posts', async (req, res) => {
+app.get("/movies",async(req,res)=>{
+  try{
+    let movies = await Movie.find({})
+    res.send(movies)
 
-    console.log(req.body)
-
-    const postDoc = new Post({
-        author: req.body.author
-    })
-
-    const result = await postDoc.save()
-
-    // Alternative:
-
-    // const result = await Post.create({ author: req.body.author })
-
-    res.json(result)
+  }catch(err){
+res.send({error:err.message})
+  }
 })
+//patch
+ app.patch("/movies",async(req, res)=>{
+  try{
+      const movies=await Movie.find()
+  res.send(movies)
 
-app.patch("/posts/:id", async (req, res) => {
-  const query = { _id: new ObjectId(req.params.id) };
-  const update = { $push: { comment: req.body } };
+  }catch(erro){
+    res.send({erro:err.message})
+  }
 
-  const collection = await db.collection("posts");
-  const result = await collection.updateOne(query, update);
+ })
 
-  res.send(result);
+ //delete
+app.delete('/movies',async(req, res)=>{
+  try{
+    const movies = await Movie.find()
+    res.send(movies)
+  }catch(erro){
+    res.send({err:err.message})
+  }
 })
-
-
-app.delete("/posts/:id", async (req, res) => {
-  let query = { _id: new ObjectId(req.params.id) };
-
-  let collection = await db.collection("posts");
-  let result = await collection.deleteOne(query);
-
-  res.send(result);
-});
-  app.get("/:id", async (req, res) => {
-  let collection = await db.collection("post");
-  let query = { _id: "149j8f3hf" };
-  res.send("test");
-});
 
 app.listen(PORT, () => {
-    console.log('Listening on port: ', PORT)
+  console.log('Listening on port: ', PORT)
 })
