@@ -17,7 +17,7 @@ console.log('MongoDB Connected')
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
-
+//get
 app.get("/movies",async(req,res)=>{
   try{
     let movies = await Movie.find({})
@@ -25,6 +25,15 @@ app.get("/movies",async(req,res)=>{
 
   }catch(err){
 res.send({error:err.message})
+  }
+})
+//posts
+app.post("/movies",async(req,res)=>{
+  try{
+    let movies = await Movie.find()
+    res.send(movies)
+  }catch(err){
+    res.send({error:erro.message})
   }
 })
 //patch
@@ -47,6 +56,7 @@ app.delete('/movies',async(req, res)=>{
   }catch(erro){
     res.send({err:err.message})
   }
+  // res.json(message:'deleting Movie')
 })
 
 app.listen(PORT, () => {
