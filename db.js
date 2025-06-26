@@ -2,7 +2,7 @@ import { MongoClient } from "mongodb";
 
 const connectionString =process.env.MONGO_URl
 
-// const client= new MongoClient(connectionString)
+const client= new MongoClient(connectionString)
 
 let conn;
 try{
