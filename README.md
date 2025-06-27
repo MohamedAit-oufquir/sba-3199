@@ -22,3 +22,5 @@ ERROR
   with thunderClient.
 Can be checked using Postman
 
+description: The Movies project using MongoDB involves creating a flexible database to store detailed information about films, including titles, genres, ratings, release years, overviews, and runtimes. It enables efficient CRUD operations and advanced queries to manage and retrieve movie data for applications or analysis.
+
