@@ -18,7 +18,7 @@ password:{
 
    })
    
-//    movieSchema.index({name:1})
+   // movieSchema.index({name:1})
    
    export default mongoose.model('User',userSchema)
    
